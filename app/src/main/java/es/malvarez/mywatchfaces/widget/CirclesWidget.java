@@ -7,13 +7,16 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import com.huami.watch.watchface.util.Util;
 import com.ingenic.iwds.slpt.view.arc.SlptPowerArcAnglePicView;
 import com.ingenic.iwds.slpt.view.arc.SlptTodayDistanceArcAnglePicView;
 import com.ingenic.iwds.slpt.view.arc.SlptTodayStepArcAnglePicView;
 import com.ingenic.iwds.slpt.view.core.SlptLinearLayout;
+import com.ingenic.iwds.slpt.view.core.SlptPictureView;
 import com.ingenic.iwds.slpt.view.core.SlptViewComponent;
+import com.ingenic.iwds.slpt.view.sport.SlptCaloriesView;
 import com.ingenic.iwds.slpt.view.sport.SlptPowerNumView;
 import com.ingenic.iwds.slpt.view.sport.SlptTodaySportDistanceLView;
 import com.ingenic.iwds.slpt.view.sport.SlptTodayStepNumView;
@@ -22,8 +25,10 @@ import com.ingenic.iwds.slpt.view.utils.SimpleFile;
 import java.util.Arrays;
 import java.util.List;
 
-import com.ravenliquid.watchfaces.R;
+import com.dinodevs.greatfitwatchface.APsettings;
+import com.dinodevs.greatfitwatchface.R;
 import es.malvarez.mywatchfaces.data.Battery;
+import es.malvarez.mywatchfaces.data.Calories;
 import es.malvarez.mywatchfaces.data.DataType;
 import es.malvarez.mywatchfaces.data.Steps;
 import es.malvarez.mywatchfaces.data.TodayDistance;
@@ -54,6 +59,8 @@ public class CirclesWidget extends AbstractWidget {
     private Float sportSweepAngle = null;
     private Drawable sportIcon;
 
+    private Calories caloriesData;
+
     private final float startAngleBattery = 30;
     private final float arcSizeBattery = 360 - startAngleBattery - startAngleBattery;
 
@@ -63,23 +70,34 @@ public class CirclesWidget extends AbstractWidget {
     private final float startAngleSport = startAngleSteps + 3;
     private final float arcSizeSport = 360 - startAngleSport - startAngleSport;
 
-    private float batteryTextLeft;
-    private float batteryTextTop;
-    private float stepsTextLeft;
-    private float stepsTextTop;
-    private float sportTextLeft;
-    private float sportTextTop;
+    private float batteryTextLeft = 150;
+    private float batteryTextTop = 276;
+    private float stepsTextLeft = 110;
+    private float stepsTextTop = 58;
+    private float caloriesTextLeft = 195;
+    private float caloriesTextTop = 58;
+    private float sportTextLeft = 240;
+    private float sportTextTop = 240;
+
+    // Settings
+    public static String[] colors = {"#ff0000", "#00ffff","#00ff00","#ff00ff","#ffffff","#ffff00"};
+    public int color = 3;
+    public APsettings settings;
 
     @Override
     public void init(Service service) {
+        this.settings = new APsettings(MalvarezClock.class.getName(), service);
+        this.color = this.settings.getInt("color",this.color);
+
         this.thickness = (int) service.getResources().getDimension(R.dimen.malvarez_circles_thickness);
 
         this.backgroundColour = service.getResources().getColor(R.color.malvarez_circles_background);
 
-        this.batteryColour = service.getResources().getColor(R.color.malvarez_circles_battery_colour);
-        this.batteryIcon = service.getResources().getDrawable(R.drawable.battery, null);
-        this.setDrawableBounds(this.batteryIcon, service.getResources().getDimension(R.dimen.malvarez_battery_icon_left), service.getResources().getDimension(R.dimen.malvarez_battery_icon_top));
+        this.batteryColour = Color.parseColor(colors[this.color]);//Color.parseColor("#ba0dfb");//service.getResources().getColor(R.color.malvarez_circles_battery_colour);
+        //this.batteryIcon = service.getResources().getDrawable(R.drawable.battery, null);
+        //this.setDrawableBounds(this.batteryIcon, service.getResources().getDimension(R.dimen.malvarez_battery_icon_left), service.getResources().getDimension(R.dimen.malvarez_battery_icon_top));
 
+        /*
         this.stepsColour = service.getResources().getColor(R.color.malvarez_circles_steps_colour);
         this.stepsIcon = service.getResources().getDrawable(R.drawable.steps, null);
         this.setDrawableBounds(this.stepsIcon, service.getResources().getDimension(R.dimen.malvarez_steps_icon_left), service.getResources().getDimension(R.dimen.malvarez_steps_icon_top));
@@ -87,12 +105,13 @@ public class CirclesWidget extends AbstractWidget {
         this.sportColour = service.getResources().getColor(R.color.malvarez_circles_sport_colour);
         this.sportIcon = service.getResources().getDrawable(R.drawable.sport, null);
         this.setDrawableBounds(this.sportIcon, service.getResources().getDimension(R.dimen.malvarez_sport_icon_left), service.getResources().getDimension(R.dimen.malvarez_sport_icon_top));
+        */
 
         this.textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        this.textPaint.setTypeface(ResourceManager.getTypeFace(service.getResources(), ResourceManager.Font.BEBAS_NEUE));
+        this.textPaint.setTypeface(ResourceManager.getTypeFace(service.getResources(), ResourceManager.Font.OSTRICH));
         this.textPaint.setTextSize(service.getResources().getDimension(R.dimen.malvarez_circles_font_size));
         this.textPaint.setColor(service.getResources().getColor(R.color.malvarez_time_colour));
-        this.textPaint.setTextAlign(Paint.Align.CENTER);
+        this.textPaint.setTextAlign(Paint.Align.LEFT);
 
         this.ring = new Paint(Paint.ANTI_ALIAS_FLAG);
         this.ring.setStrokeCap(Paint.Cap.ROUND);
@@ -104,12 +123,12 @@ public class CirclesWidget extends AbstractWidget {
         this.circle.setStrokeWidth(1f);
         this.circle.setStyle(Paint.Style.STROKE);
 
-        this.batteryTextLeft = service.getResources().getDimension(R.dimen.malvarez_battery_text_left);
-        this.batteryTextTop = service.getResources().getDimension(R.dimen.malvarez_battery_text_top);
-        this.stepsTextLeft = service.getResources().getDimension(R.dimen.malvarez_steps_text_left);
-        this.stepsTextTop = service.getResources().getDimension(R.dimen.malvarez_steps_text_top);
-        this.sportTextLeft = service.getResources().getDimension(R.dimen.malvarez_sport_text_left);
-        this.sportTextTop = service.getResources().getDimension(R.dimen.malvarez_sport_text_top);
+        //this.batteryTextLeft = service.getResources().getDimension(R.dimen.malvarez_battery_text_left);
+        //this.batteryTextTop = service.getResources().getDimension(R.dimen.malvarez_battery_text_top);
+        //this.stepsTextLeft = service.getResources().getDimension(R.dimen.malvarez_steps_text_left);
+        //this.stepsTextTop = service.getResources().getDimension(R.dimen.malvarez_steps_text_top);
+        //this.sportTextLeft = service.getResources().getDimension(R.dimen.malvarez_sport_text_left);
+        //this.sportTextTop = service.getResources().getDimension(R.dimen.malvarez_sport_text_top);
     }
 
     @Override
@@ -134,6 +153,7 @@ public class CirclesWidget extends AbstractWidget {
             canvas.drawCircle(px, py, this.thickness / 6f, circle);
         }
 
+        /*
         oval = nextOval(oval);
         this.ring.setColor(this.backgroundColour);
         canvas.drawArc(oval, startAngleSteps, arcSizeSteps, false, ring);
@@ -157,28 +177,35 @@ public class CirclesWidget extends AbstractWidget {
             canvas.drawCircle(px, py, this.thickness / 3f, circle);
             canvas.drawCircle(px, py, this.thickness / 6f, circle);
         }
+        */
 
         canvas.restoreToCount(count);
 
-        this.batteryIcon.draw(canvas);
-        this.stepsIcon.draw(canvas);
-        this.sportIcon.draw(canvas);
+        //this.batteryIcon.draw(canvas);
+        //this.stepsIcon.draw(canvas);
+        //this.sportIcon.draw(canvas);
 
         if (this.batteryData != null) {
-            String text = String.format("%02d", this.batteryData.getLevel() * 100 / this.batteryData.getScale());
-            canvas.drawText(text, batteryTextLeft, batteryTextTop, textPaint);
+            String text = String.format("%02d", this.batteryData.getLevel() * 100 / this.batteryData.getScale())+"%";
+            canvas.drawText(text, batteryTextLeft, batteryTextTop+Math.round(textPaint.getTextSize()*0.75), textPaint);
         }
 
         if (this.stepsData != null) {
             String text = String.format("%s", this.stepsData.getSteps());
-            canvas.drawText(text, stepsTextLeft, stepsTextTop, textPaint);
+            canvas.drawText(text, stepsTextLeft, stepsTextTop+Math.round(textPaint.getTextSize()*0.75), textPaint);
         }
 
+        /*
         if (this.sportData != null) {
             String text = String.format("%s", this.sportData.getDistance());
             canvas.drawText(text, sportTextLeft, sportTextTop, textPaint);
         }
 
+        if (this.caloriesData != null) {
+            String text = String.format("%s", this.caloriesData.getCalories());
+            canvas.drawText(text, caloriesTextLeft, caloriesTextTop+Math.round(textPaint.getTextSize()*0.75), textPaint);
+        }
+        */
     }
 
     @Override
@@ -190,8 +217,11 @@ public class CirclesWidget extends AbstractWidget {
             case BATTERY:
                 onBatteryData((Battery) value);
                 break;
+            case CALORIES:
+                //onCaloriesData((Calories) value);
+                break;
             case DISTANCE:
-                onDistanceData((TodayDistance) value);
+                //onDistanceData((TodayDistance) value);
                 break;
         }
     }
@@ -204,11 +234,12 @@ public class CirclesWidget extends AbstractWidget {
 
     private void onSteps(Steps steps) {
         this.stepsData = steps;
+        /*
         if (stepsData == null || stepsData.getTarget() == 0) {
             this.stepsSweepAngle = 0f;
         } else {
             this.stepsSweepAngle = Math.min(arcSizeSteps, arcSizeSteps * (stepsData.getSteps() / (float) stepsData.getTarget()));
-        }
+        }*/
     }
 
     private void onBatteryData(Battery battery) {
@@ -231,6 +262,17 @@ public class CirclesWidget extends AbstractWidget {
         }
     }
 
+    private void onCaloriesData(Calories calories) {
+        this.caloriesData = calories;
+        /*
+        if (calories == null || calories.getCalories() <= 0) {
+            this.sportSweepAngle = 0f;
+        } else {
+            double scale = calories.getCalories() / 3.0d;
+            this.sportSweepAngle = (float) Math.min(arcSizeSport, arcSizeSport * scale);
+        }*/
+    }
+
     private RectF nextOval(RectF oval) {
         oval.left = oval.left + this.thickness + MARGIN;
         oval.top = oval.top + this.thickness + MARGIN;
@@ -251,20 +293,30 @@ public class CirclesWidget extends AbstractWidget {
 
     @Override
     public List<SlptViewComponent> buildSlptViewComponent(Service service) {
-        Typeface timeTypeFace = ResourceManager.getTypeFace(service.getResources(), ResourceManager.Font.BEBAS_NEUE);
+        this.settings = new APsettings(MalvarezClock.class.getName(), service);
+        this.color = this.settings.getInt("color",this.color);
+
+        //Log.println(Log.WARN,"MyWhatsFace","===================Works=================");
+
+        Typeface timeTypeFace = ResourceManager.getTypeFace(service.getResources(), ResourceManager.Font.OSTRICH);
 
         SlptLinearLayout power = new SlptLinearLayout();
         power.alignX = 2;
         power.alignY = 2;
         power.add(new SlptPowerNumView());
+        // set space
+        SlptPictureView percentTextLayout = new SlptPictureView();
+        percentTextLayout.setStringPicture("%");
+        power.add(percentTextLayout);
+
         power.setTextAttrForAll(
                 service.getResources().getDimension(R.dimen.malvarez_circles_font_size_slpt),
                 -1,
                 timeTypeFace
         );
         power.setStart(
-                (int) service.getResources().getDimension(R.dimen.malvarez_battery_text_left_slpt),
-                (int) service.getResources().getDimension(R.dimen.malvarez_battery_text_top_slpt));
+                (int) batteryTextLeft,//service.getResources().getDimension(R.dimen.malvarez_battery_text_left_slpt),
+                (int) batteryTextTop);//service.getResources().getDimension(R.dimen.malvarez_battery_text_top_slpt));
 
         SlptLinearLayout steps = new SlptLinearLayout();
         steps.alignX = 2;
@@ -277,9 +329,10 @@ public class CirclesWidget extends AbstractWidget {
         );
 
         steps.setStart(
-                (int) service.getResources().getDimension(R.dimen.malvarez_steps_text_left_slpt),
-                (int) service.getResources().getDimension(R.dimen.malvarez_steps_text_top_slpt));
+                (int) stepsTextLeft,//service.getResources().getDimension(R.dimen.malvarez_steps_text_left_slpt),
+                (int) stepsTextTop);//service.getResources().getDimension(R.dimen.malvarez_steps_text_top_slpt));
 
+        /*
         SlptLinearLayout sport = new SlptLinearLayout();
         sport.add(new SlptTodaySportDistanceLView());
         sport.setTextAttrForAll(
@@ -291,11 +344,48 @@ public class CirclesWidget extends AbstractWidget {
                 (int) service.getResources().getDimension(R.dimen.malvarez_sport_text_left_slpt),
                 (int) service.getResources().getDimension(R.dimen.malvarez_sport_text_top_slpt));
 
+        SlptLinearLayout calories = new SlptLinearLayout();
+        calories.add(new SlptCaloriesView());
+        calories.setTextAttrForAll(
+                service.getResources().getDimension(R.dimen.malvarez_circles_font_size_slpt),
+                -1,
+                timeTypeFace
+        );
+        calories.setStart(
+                (int) caloriesTextLeft,
+                (int) caloriesTextTop);
+        */
         SlptPowerArcAnglePicView powerArcView = new SlptPowerArcAnglePicView();
-        powerArcView.setImagePicture(SimpleFile.readFileFromAssets(service.getApplicationContext(), "battery_splt.png"));
+        String bg;
+        switch (this.color) {
+            case 0:
+                bg = "battery_splt1.png";
+                break;
+            case 1:
+                bg = "battery_splt2.png";
+                break;
+            case 2:
+                bg = "battery_splt3.png";
+                break;
+            case 3:
+                bg = "battery_splt.png";
+                break;
+            case 4:
+                bg = "battery_splt5.png";
+                break;
+            case 5:
+                bg = "battery_splt6.png";
+                break;
+            default:
+                bg = "battery_splt.png";
+                break;
+        }
+        powerArcView.setImagePicture(SimpleFile.readFileFromAssets(service.getApplicationContext(), bg));
+        //powerArcView.setImagePicture(SimpleFile.readFileFromAssets(service.getApplicationContext(), "battery_splt.png"));
         powerArcView.start_angle = (int) startAngleBattery + 180 - 3;
         powerArcView.full_angle = (int) arcSizeBattery + 6;
 
+        /*
         SlptTodayStepArcAnglePicView stepArcPicView = new SlptTodayStepArcAnglePicView();
         stepArcPicView.setImagePicture(SimpleFile.readFileFromAssets(service.getApplicationContext(), "steps_splt.png"));
         stepArcPicView.start_angle = (int) startAngleSteps + 180 - 3;
@@ -306,7 +396,7 @@ public class CirclesWidget extends AbstractWidget {
         distanceArcPicView.setImagePicture(SimpleFile.readFileFromAssets(service.getApplicationContext(), "sports_splt.png"));
         distanceArcPicView.start_angle = (int) startAngleSport + 180 - 3;
         distanceArcPicView.full_angle = (int) arcSizeSport + 6;
-
-        return Arrays.asList(power, steps, sport, powerArcView, stepArcPicView, distanceArcPicView);
+        */
+        return Arrays.asList(power, steps, powerArcView);//calories, stepArcPicView, distanceArcPicView);
     }
 }

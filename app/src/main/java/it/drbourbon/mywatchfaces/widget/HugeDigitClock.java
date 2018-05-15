@@ -30,7 +30,7 @@ import java.util.List;
 import es.malvarez.mywatchfaces.resource.ResourceManager;
 import es.malvarez.mywatchfaces.widget.DigitalClockWidget;
 
-import com.ravenliquid.watchfaces.R;
+import com.dinodevs.greatfitwatchface.R;
 
 /**
  * Created by fabio on 21/05/17.
@@ -42,7 +42,7 @@ public class HugeDigitClock extends DigitalClockWidget {
     private int img_offset;
     private Drawable[] digits;
     private final int[] digitalNums =
-            {
+            {/*
                     R.drawable.d0b,
                     R.drawable.d1b,
                     R.drawable.d2b,
@@ -53,7 +53,7 @@ public class HugeDigitClock extends DigitalClockWidget {
                     R.drawable.d7b,
                     R.drawable.d8b,
                     R.drawable.d9b
-            };
+            */};
 
     @Override
     public void init(Service service) {

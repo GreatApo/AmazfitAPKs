@@ -19,7 +19,7 @@ import es.malvarez.mywatchfaces.data.DataType;
 import es.malvarez.mywatchfaces.resource.ResourceManager;
 import es.malvarez.mywatchfaces.widget.AbstractWidget;
 
-import com.ravenliquid.watchfaces.R;
+import com.dinodevs.greatfitwatchface.R;
 
 /**
  * Created by fabio on 23/05/17.
@@ -63,7 +63,8 @@ public class BigImageWeather extends AbstractWidget {
     };
     */
     private final int[] weatherIconIds = new int[]{
-            R.drawable.weather_sunny,
+            /*
+            R.drawable.,
             R.drawable.weather_cloudy,
             R.drawable.weather_overcast,
             R.drawable.weather_fog,
@@ -85,6 +86,7 @@ public class BigImageWeather extends AbstractWidget {
             R.drawable.weather_dust,
             R.drawable.weather_dust,
             R.drawable.weather_dust,
+            */
     };
 
     @Override

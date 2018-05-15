@@ -13,7 +13,7 @@ import com.ingenic.iwds.slpt.view.sport.SlptLastHeartRateView;
 import java.util.Collections;
 import java.util.List;
 
-import com.ravenliquid.watchfaces.R;
+import com.dinodevs.greatfitwatchface.R;
 import es.malvarez.mywatchfaces.data.DataType;
 import es.malvarez.mywatchfaces.data.HeartRate;
 import es.malvarez.mywatchfaces.resource.ResourceManager;
@@ -42,7 +42,7 @@ public class HeartRateWidget extends AbstractWidget {
         this.textPaint.setTextSize(service.getResources().getDimension(R.dimen.malvarez_circles_font_size));
         this.textPaint.setTextAlign(Paint.Align.CENTER);
 
-        this.heartIcon = service.getResources().getDrawable(R.drawable.heart, null);
+        //this.heartIcon = service.getResources().getDrawable(R.drawable.heart, null);
         this.setDrawableBounds(this.heartIcon, service.getResources().getDimension(R.dimen.malvarez_heart_rate_icon_left), service.getResources().getDimension(R.dimen.malvarez_heart_rate_icon_top));
     }
 

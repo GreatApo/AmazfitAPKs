@@ -16,7 +16,7 @@ import com.ingenic.iwds.slpt.view.digital.SlptMinuteHView;
 import com.ingenic.iwds.slpt.view.digital.SlptMinuteLView;
 import com.ingenic.iwds.slpt.view.digital.SlptTimeView;
 import com.ingenic.iwds.slpt.view.utils.SimpleFile;
-import com.ravenliquid.watchfaces.R;
+import com.dinodevs.greatfitwatchface.R;
 
 import java.util.Arrays;
 import java.util.LinkedList;

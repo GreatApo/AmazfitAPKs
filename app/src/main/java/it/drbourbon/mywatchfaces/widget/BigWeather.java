@@ -18,7 +18,7 @@ import es.malvarez.mywatchfaces.data.Steps;
 import es.malvarez.mywatchfaces.resource.ResourceManager;
 import es.malvarez.mywatchfaces.widget.AbstractWidget;
 
-import com.ravenliquid.watchfaces.R;
+import com.dinodevs.greatfitwatchface.R;
 
 /**
  * Created by fabio on 23/05/17.
@@ -61,7 +61,7 @@ public class BigWeather extends AbstractWidget {
     @Override
     public void init(Service service) {
         this.weatherFont = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
-        this.weatherFont.setTypeface(ResourceManager.getTypeFace(service.getResources(), ResourceManager.Font.OPEN24));
+        this.weatherFont.setTypeface(ResourceManager.getTypeFace(service.getResources(), ResourceManager.Font.BEBAS_NEUE));
         this.weatherFont.setTextSize(service.getResources().getDimension(R.dimen.weather_font_size));
         this.weatherFont.setColor(service.getResources().getColor(R.color.threelines_time_color));
         this.weatherFont.setTextAlign(Paint.Align.CENTER);

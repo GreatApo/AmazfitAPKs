@@ -13,8 +13,8 @@ public class ResourceManager {
 
     public enum Font {
         BEBAS_NEUE("fonts/BebasNeue.otf"),
-        OPEN24("fonts/Open24DisplaySt.ttf");
-
+        //OPEN24("fonts/Open24DisplaySt.ttf"),
+        OSTRICH("fonts/Ostrich.ttf");
 
         private final String path;
 

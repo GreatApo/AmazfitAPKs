@@ -7,15 +7,15 @@
     <dimen name="weather_font_size">22px</dimen>
 
 
-    <dimen name="malvarez_time_hour_left">160px</dimen>
-    <dimen name="malvarez_time_hour_top">145px</dimen>
+    <dimen name="malvarez_time_hour_left">60px</dimen>
+    <dimen name="malvarez_time_hour_top">87px</dimen>
     <dimen name="malvarez_time_minute_left">160px</dimen>
     <dimen name="malvarez_time_minute_top">250px</dimen>
     <dimen name="malvarez_time_hour_left_slpt">113px</dimen>
     <dimen name="malvarez_time_hour_top_slpt">39px</dimen>
     <dimen name="malvarez_time_minute_left_slpt">113px</dimen>
     <dimen name="malvarez_time_minute_top_slpt">144px</dimen>
-    <dimen name="malvarez_time_font_size">120px</dimen>
+    <dimen name="malvarez_time_font_size">192px</dimen>
 
     <dimen name="malvarez_date_left">160px</dimen>
     <dimen name="malvarez_date_top">290px</dimen>

@@ -28,7 +28,7 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.ravenliquid.watchfaces.R;
+import com.dinodevs.greatfitwatchface.R;
 import es.malvarez.mywatchfaces.resource.ResourceManager;
 import es.malvarez.mywatchfaces.widget.DigitalClockWidget;
 

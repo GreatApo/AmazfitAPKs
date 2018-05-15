@@ -1,9 +1,7 @@
 package es.malvarez.mywatchfaces;
 
-import com.ingenic.iwds.slpt.view.core.SlptLayout;
-
 import es.malvarez.mywatchfaces.widget.CirclesWidget;
-import es.malvarez.mywatchfaces.widget.HeartRateWidget;
+import es.malvarez.mywatchfaces.widget.CaloriesWidget;
 import es.malvarez.mywatchfaces.widget.MalvarezClock;
 
 /**
@@ -16,7 +14,7 @@ public class MalvarezWatchFaceSplt extends AbstractWatchFaceSlpt {
         super(
                 new MalvarezClock(),
                 new CirclesWidget(),
-                new HeartRateWidget()
+                new CaloriesWidget()
         );
     }
 
@@ -24,6 +22,5 @@ public class MalvarezWatchFaceSplt extends AbstractWatchFaceSlpt {
     protected void initWatchFaceConfig() {
 
     }
-
 
 }

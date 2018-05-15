@@ -20,7 +20,7 @@ import es.malvarez.mywatchfaces.data.HeartRate;
 import es.malvarez.mywatchfaces.data.Steps;
 import es.malvarez.mywatchfaces.resource.ResourceManager;
 import es.malvarez.mywatchfaces.widget.AbstractWidget;
-import com.ravenliquid.watchfaces.R;
+import com.dinodevs.greatfitwatchface.R;
 
 /**
  * Heart rate widget
@@ -36,7 +36,7 @@ public class ThreeLinesStepsWidget extends AbstractWidget {
     public void init(Service service) {
         this.verticalOffset = service.getResources().getDimension(R.dimen.threelines_voffset);
         this.stepsFont = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
-        this.stepsFont.setTypeface(ResourceManager.getTypeFace(service.getResources(), ResourceManager.Font.OPEN24));
+        this.stepsFont.setTypeface(ResourceManager.getTypeFace(service.getResources(), ResourceManager.Font.BEBAS_NEUE));
         this.stepsFont.setTextSize(service.getResources().getDimension(R.dimen.threelines_font_size));
         this.stepsFont.setColor(service.getResources().getColor(R.color.threelines_steps_color));
         this.stepsFont.setTextAlign(Paint.Align.CENTER);
@@ -84,7 +84,7 @@ public class ThreeLinesStepsWidget extends AbstractWidget {
         steps.setTextAttrForAll(
                 service.getResources().getDimension(R.dimen.threelines_font_size),
                 service.getResources().getColor(R.color.threelines_steps_color),
-                ResourceManager.getTypeFace(service.getResources(), ResourceManager.Font.OPEN24)
+                ResourceManager.getTypeFace(service.getResources(), ResourceManager.Font.BEBAS_NEUE)
         );
         steps.centerHorizontal = 1;
 

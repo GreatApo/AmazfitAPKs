@@ -35,7 +35,7 @@ import es.malvarez.mywatchfaces.data.DataType;
 import es.malvarez.mywatchfaces.resource.ResourceManager;
 import es.malvarez.mywatchfaces.widget.DigitalClockWidget;
 
-import com.ravenliquid.watchfaces.R;
+import com.dinodevs.greatfitwatchface.R;
 import com.ravenliquid.watchfaces.Utility;
 
 /**
@@ -63,13 +63,13 @@ public class ThreeLines extends DigitalClockWidget {
         this.verticalOffset = service.getResources().getDimension(R.dimen.threelines_voffset);
 
         this.timeFont = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
-        this.timeFont.setTypeface(ResourceManager.getTypeFace(service.getResources(), ResourceManager.Font.OPEN24));
+        this.timeFont.setTypeface(ResourceManager.getTypeFace(service.getResources(), ResourceManager.Font.BEBAS_NEUE));
         this.timeFont.setTextSize(service.getResources().getDimension(R.dimen.threelines_font_size));
         this.timeFont.setColor(service.getResources().getColor(R.color.threelines_time_color));
         this.timeFont.setTextAlign(Paint.Align.CENTER);
 
         this.dateFont = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
-        this.dateFont.setTypeface(ResourceManager.getTypeFace(service.getResources(), ResourceManager.Font.OPEN24));
+        this.dateFont.setTypeface(ResourceManager.getTypeFace(service.getResources(), ResourceManager.Font.BEBAS_NEUE));
         this.dateFont.setTextSize(service.getResources().getDimension(R.dimen.threelines_font_size));
         this.dateFont.setColor(service.getResources().getColor(R.color.threelines_date_color));
         this.dateFont.setTextAlign(Paint.Align.CENTER);
@@ -118,7 +118,7 @@ public class ThreeLines extends DigitalClockWidget {
         var21.setTextAttrForAll(
                 service.getResources().getDimension(R.dimen.threelines_font_size),
                 service.getResources().getColor(R.color.threelines_date_color),
-                ResourceManager.getTypeFace(service.getResources(), ResourceManager.Font.OPEN24)
+                ResourceManager.getTypeFace(service.getResources(), ResourceManager.Font.BEBAS_NEUE)
         );
         Utility.setStringPictureArrayForAll(var21, this.digitalNums);
         var21.setStart(x, y);
@@ -149,7 +149,7 @@ public class ThreeLines extends DigitalClockWidget {
         var21.setTextAttrForAll(
                 service.getResources().getDimension(R.dimen.threelines_font_size),
                 service.getResources().getColor(R.color.threelines_time_color),
-                ResourceManager.getTypeFace(service.getResources(), ResourceManager.Font.OPEN24)
+                ResourceManager.getTypeFace(service.getResources(), ResourceManager.Font.BEBAS_NEUE)
         );
         Utility.setStringPictureArrayForAll(var21, this.digitalNums);
         var21.setStart(x, y);

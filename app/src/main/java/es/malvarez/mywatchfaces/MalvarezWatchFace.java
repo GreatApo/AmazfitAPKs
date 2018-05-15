@@ -3,7 +3,7 @@ package es.malvarez.mywatchfaces;
 import com.huami.watch.watchface.AbstractSlptClock;
 
 import es.malvarez.mywatchfaces.widget.CirclesWidget;
-import es.malvarez.mywatchfaces.widget.HeartRateWidget;
+import es.malvarez.mywatchfaces.widget.CaloriesWidget;
 import es.malvarez.mywatchfaces.widget.MalvarezClock;
 
 /**
@@ -16,7 +16,7 @@ public class MalvarezWatchFace extends AbstractWatchFace {
         super(
                 new MalvarezClock(),
                 new CirclesWidget(),
-                new HeartRateWidget()
+                new CaloriesWidget()
         );
     }
 
